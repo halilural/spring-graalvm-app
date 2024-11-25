@@ -1,25 +1,28 @@
-name: GraalVM build
-on: [push, pull_request]
+name: GraalVM Native Image builds
+on: [ push, pull_request ]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: WebApp on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest, windows-latest, ubuntu-latest ]
     steps:
       - uses: actions/checkout@v4
+
       - uses: graalvm/setup-graalvm@v1
         with:
-          java-version: '21'      # See 'Options' for more details
-          distribution: 'graalvm' # See 'Supported distributions' for available options
+          java-version: '21'
+          distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Example step
-        run: |
-          echo "GRAALVM_HOME: $GRAALVM_HOME"
-          echo "JAVA_HOME: $JAVA_HOME"
-          java --version
-          native-image --version
-      - name: Debug Directory
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Listing files:"
-          ls -la
+          native-image-job-reports: 'true'
+
       - name: Example step using Gradle plugin # https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html
         run: ./gradlew nativeCompile
+             ./build/native/nativeCompile/spring-graalvm-app
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: spring-graalvm-app-${{ matrix.os }}
+          path: spring-graalvm-app*
