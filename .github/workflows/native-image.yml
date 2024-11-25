@@ -1,12 +1,12 @@
 name: GraalVM Native Image builds
-on: [ push, pull_request ]
+on: [push, pull_request]
 jobs:
   build:
     name: WebApp on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ macos-latest, windows-latest, ubuntu-latest ]
+        os: [macos-latest, windows-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v4
 
@@ -17,12 +17,11 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           native-image-job-reports: 'true'
 
-      - name: Example step using Gradle plugin # https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html
+      - name: Example step using Gradle plugin
         run: ./gradlew nativeCompile
-             ./build/native/nativeCompile/spring-graalvm-app
 
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: spring-graalvm-app-${{ matrix.os }}
-          path: spring-graalvm-app*
+          path: ./build/native/nativeCompile/spring-graalvm-app
