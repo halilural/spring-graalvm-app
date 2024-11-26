@@ -11,4 +11,4 @@ This project demonstrates a Spring Boot application built with GraalVM to create
 
 ## Article
 
-Please read the [GitHub Actions for GraalVM Native Images: Securing the Build and Release Workflow](https://medium.com/p/97aa3908e471/edit) for more information.
+Please read the [GitHub Actions for GraalVM Native Images: Securing the Build and Release Workflow](https://halilural5.medium.com/github-actions-for-graalvm-native-images-securing-the-build-and-release-workflow-97aa3908e471) for more information.

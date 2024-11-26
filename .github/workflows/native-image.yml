@@ -1,12 +1,12 @@
 name: GraalVM Native Image builds
-on: [push, pull_request]
+on: [ push, pull_request ]
 jobs:
   build:
     name: WebApp on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    runs-on: [ ${ { matrix.os } },x64 ]
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [ macos-latest, windows-latest, ubuntu-latest ]
     steps:
       - uses: actions/checkout@v4
 
